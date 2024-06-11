@@ -1,12 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 /*
  * Quick Union (lazy)
  * Complexity: ON
  */
 func main() {
+	start := time.Now()
 	array := make([]int, 10)
 
 	for i := 0; i < 10; i++ {
@@ -24,6 +28,9 @@ func main() {
 	fmt.Println(connected(4, 8, &array)) // true
 
 	fmt.Println(array) // [0 1 2 8 3 6 6 7 8 9]
+
+	elapsed := time.Since(start) // Calculate the elapsed time
+	fmt.Printf("Execution time: %s\n", elapsed)
 }
 
 func root(p int, array *[]int) int {
