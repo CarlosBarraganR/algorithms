@@ -12,6 +12,7 @@ func main() {
 
 	for i := 0; i < 10; i++ {
 		array[i] = i
+		size[i] = 1 // add initial weigth size to all nodes
 	}
 
 	fmt.Println(array) // [0 1 2 3 4 5 6 7 8 9]
@@ -46,21 +47,12 @@ func union(p int, q int, array *[]int, size *[]int) {
 	if i == j {
 		return
 	}
-
 	// we weight wich tree is smaller
 	if (*size)[i] < (*size)[j] {
 		(*array)[i] = j
-		// add initial weight on first union j + i
-		if (*size)[j] == 0 {
-			(*size)[j] = 2
-		}
 		(*size)[j] += (*size)[i]
 	} else {
 		(*array)[j] = i
-		// add initial weight on first union i + j
-		if (*size)[i] == 0 {
-			(*size)[i] = 2
-		}
 		(*size)[i] += (*size)[j]
 	}
 }
