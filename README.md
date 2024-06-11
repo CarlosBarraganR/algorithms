@@ -1,2 +1,3 @@
-# algorithms
-TS Algorithms list from Princeton University course
+# Algorithms
+
+Algorithms list in GO from Princeton University course
