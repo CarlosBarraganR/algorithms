@@ -23,7 +23,6 @@ func main() {
  * Complexity: Olog
  */
 func BinarySearch(array []int, target int) int {
-
 	left := 0
 	right := len(array) - 1
 
