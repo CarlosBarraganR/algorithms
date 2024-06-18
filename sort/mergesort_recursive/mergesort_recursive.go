@@ -52,11 +52,11 @@ func main() {
 
 	arrayInt := []int{14, 6, 232, 5, 63, 2, 1, 5}
 	Mergesort(arrayInt)
-	fmt.Println(arrayInt)
+	fmt.Println(arrayInt) // [1 2 5 5 6 14 63 232]
 
 	arrayString := []string{"z", "b", "f", "a", "y", "e", "r", "p"}
 	Mergesort(arrayString)
-	fmt.Println(arrayString)
+	fmt.Println(arrayString) // [a b e f p r y z]
 
 	elapsed := time.Since(start) // Calculate the elapsed time
 	fmt.Printf("Execution time: %s\n", elapsed)
