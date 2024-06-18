@@ -13,7 +13,6 @@ func Sort[T int | float32 | string](array []T) {
 			}
 		}
 	}
-
 }
 
 func main() {
