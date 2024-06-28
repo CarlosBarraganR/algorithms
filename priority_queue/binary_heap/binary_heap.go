@@ -53,13 +53,13 @@ func (pq *BinaryHeap[T]) Push(value T) {
 }
 
 func (pq *BinaryHeap[T]) Pop() T {
-	// 1. store next in queue
+	// store next in queue
 	valueToPop := pq.items[0]
-	// 2. exchange root [0] for last [n-1]
+	// exchange root [0] for last [n-1]
 	pq.items[0], pq.items[len(pq.items)-1] = pq.items[len(pq.items)-1], pq.items[0]
-	// 3. slice to remove last item
+	// slice to remove last item
 	pq.items = pq.items[:len(pq.items)-1]
-	// 4. sink switched root until correct position
+	// sink switched root until correct position
 	pq.sink(0)
 
 	return valueToPop
