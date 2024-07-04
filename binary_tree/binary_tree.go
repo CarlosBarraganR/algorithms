@@ -109,6 +109,22 @@ func (bt *BinaryTree) Rank(key string) int {
 	return bt._rank(bt.root, key)
 }
 
+func (bt *BinaryTree) _deleteMin(node *TreeNode) *TreeNode {
+	// if min is found return right node that will replace deleted min
+	if node.left == nil {
+		return node.right
+	}
+	node.left = bt._deleteMin(node.left)                          // if min is found will be replaced by the right node
+	node.count = 1 + bt._count(node.left) + bt._count(node.right) // update node count to adjust deleted min node
+	return node
+
+}
+
+func (bt *BinaryTree) DeleteMin() {
+	// recursive way to find how many keys are less than the key
+	bt.root = bt._deleteMin(bt.root)
+}
+
 func main() {
 	start := time.Now()
 
@@ -133,6 +149,9 @@ func main() {
 	fmt.Println(binaryTree.Search("g")) // new G
 	fmt.Println(binaryTree.Size())      // 9
 	fmt.Println(binaryTree.Rank("e"))   // 2
+	binaryTree.DeleteMin()
+	fmt.Println(binaryTree.Size())      // 8
+	fmt.Println(binaryTree.Search("a")) // nil because it was deleted as the minimum value
 
 	elapsed := time.Since(start) // Calculate the elapsed time
 	fmt.Printf("Execution time: %s\n", elapsed)
