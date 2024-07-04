@@ -91,6 +91,24 @@ func (bt *BinaryTree) Floor(key string) *TreeNode {
 	return bt._floor(bt.root, key)
 }
 
+func (bt *BinaryTree) _rank(node *TreeNode, key string) int {
+	// recursive base condition to stop when no keys are less than key
+	if node == nil {
+		return 0
+	} else if key < node.key { // if key is less we rank the next node to the left
+		return bt._rank(node.left, key)
+	} else if key > node.key { // if greater means we need to count current node childrens
+		return 1 + bt._count(node.left) + bt._count(node.right)
+	} else { // if equal we count to the left only since right will always be greater
+		return bt._count(node.left)
+	}
+}
+
+func (bt *BinaryTree) Rank(key string) int {
+	// recursive way to find how many keys are less than the key
+	return bt._rank(bt.root, key)
+}
+
 func main() {
 	start := time.Now()
 
@@ -114,6 +132,7 @@ func main() {
 	binaryTree.Insert("g", "new G")
 	fmt.Println(binaryTree.Search("g")) // new G
 	fmt.Println(binaryTree.Size())      // 9
+	fmt.Println(binaryTree.Rank("e"))   // 2
 
 	elapsed := time.Since(start) // Calculate the elapsed time
 	fmt.Printf("Execution time: %s\n", elapsed)
