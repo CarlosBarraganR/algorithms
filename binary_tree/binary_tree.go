@@ -117,12 +117,54 @@ func (bt *BinaryTree) _deleteMin(node *TreeNode) *TreeNode {
 	node.left = bt._deleteMin(node.left)                          // if min is found will be replaced by the right node
 	node.count = 1 + bt._count(node.left) + bt._count(node.right) // update node count to adjust deleted min node
 	return node
-
 }
 
 func (bt *BinaryTree) DeleteMin() {
 	// recursive way to find how many keys are less than the key
 	bt.root = bt._deleteMin(bt.root)
+}
+
+// Internal function to find the node with the minimum key value found in that tree
+func (bt *BinaryTree) _min(node *TreeNode) *TreeNode {
+	currentNode := node
+
+	for currentNode.left != nil {
+		currentNode = currentNode.left
+	}
+
+	return currentNode
+}
+
+func (bt *BinaryTree) _delete(node *TreeNode, key string) *TreeNode {
+	if node == nil {
+		return nil
+	} else if key < node.key {
+		// keep searching for key on the left
+		node.left = bt._delete(node.left, key)
+	} else if key > node.key {
+		// keep searching for key on the rigth
+		node.right = bt._delete(node.right, key)
+	} else {
+		// Case 0-1: Node to delete with 1 or no child
+		if node.right == nil {
+			return node.left
+		} else if node.left == nil {
+			return node.right
+		}
+		// Case 2: Node with two children
+		temp := bt._min(node.right) // get the inorder successor (smallest in the right subtree)
+		// Copy the inorder successor's content to this node
+		node = temp
+		// Delete the inorder successor
+		node.right = bt._delete(node.right, temp.key)
+	}
+	node.count = 1 + bt._count(node.left) + bt._count(node.right) // update node count to adjust deleted one
+	return node
+}
+
+func (bt *BinaryTree) Delete(key string) {
+	// recursive way to find how many keys are less than the key
+	bt.root = bt._delete(bt.root, key)
 }
 
 func main() {
@@ -152,6 +194,11 @@ func main() {
 	binaryTree.DeleteMin()
 	fmt.Println(binaryTree.Size())      // 8
 	fmt.Println(binaryTree.Search("a")) // nil because it was deleted as the minimum value
+
+	binaryTree.Insert("a", "A")
+	fmt.Println(binaryTree.Size()) // 9
+	binaryTree.Delete("e")
+	fmt.Println(binaryTree.Search("e")) // nil because it was deleted above
 
 	elapsed := time.Since(start) // Calculate the elapsed time
 	fmt.Printf("Execution time: %s\n", elapsed)
